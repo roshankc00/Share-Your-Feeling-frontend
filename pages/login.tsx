@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import cookies from 'js-cookie'
 import axios from "axios";
 import { BASE_URL } from "@/constants/api_all";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,16 +18,36 @@ const login = () => {
   });
   const handleLogin = async (e:any) => {
     e.preventDefault()
-    const res = await axios.post(`${BASE_URL}/api/v1/user/login`, {
+    let loginData:any={
       email:inputs.email,
       password:inputs.password
-    });
 
-    console.log(res.data)
-    dispatch(loginUser(res.data))
-  };
+    }
+    loginData=JSON.stringify(loginData)
+    try {
+      
+   
+    // const res = await axios.post(`${BASE_URL}/user/login`,
+    //  loginData)
+    //   ;
+    const response=await fetch(`${BASE_URL}/user/login`,{
+      method:"POST",
+      headers:{
+      "Content-Type": "application/json",
+      },
+      body:loginData
+    });
+    const json=await response.json()
+    console.log(json.token);
+    dispatch(loginUser(json))
+  } catch (error) {
+    console.log(error)
+    
+  }
+};
   useEffect(()=>{
     if(Login.sucess){
+cookies.set("token",Login.token)   
       Router.push('/content')
     }
   })
@@ -85,7 +106,6 @@ const login = () => {
                 />
               </div>
             </div>
-
             <div>
               <button
                 type="submit"

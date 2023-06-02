@@ -24,7 +24,7 @@ export default function Home() {
     formdata.append('password',inputs.password)
     formdata.append('profile',profile)
     console.log(formdata)
-    const res=await axios.post(`${BASE_URL}/api/v1/user/register`,formdata);
+    const res=await axios.post(`${BASE_URL}/user/register`,formdata);
     console.log(res.data,"res")
     dispatch(registerUser(res.data))
     

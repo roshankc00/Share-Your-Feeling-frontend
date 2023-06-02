@@ -7,8 +7,14 @@ export interface RegisterInterface {
 export interface ResData{
     sucess:boolean,
     message:string
+} 
+export interface LoginData{
+    sucess:boolean,
+    message:string,
+    token:string
 }
+
 export interface authMessage{
     Register:ResData,
-    Login:ResData,
+    Login:LoginData,
 }

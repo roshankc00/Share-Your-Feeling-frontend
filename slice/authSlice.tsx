@@ -7,7 +7,8 @@ let initialState:authMessage={
     },
     Login:{
         sucess:false,
-        message:""
+        message:"",
+        token:""
     }
    
 }
@@ -23,7 +24,7 @@ const authSlice=createSlice({
         loginUser:(state,action)=>{
             state.Login.sucess=action.payload.sucess
             state.Login.message=action.payload.message
-            
+            state.Login.token=action.payload.token
         }
     }
 
