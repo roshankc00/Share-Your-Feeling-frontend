@@ -1,8 +1,15 @@
-import { ResData } from '@/interfaces/authInterface'
+import { ResData, authMessage } from '@/interfaces/authInterface'
 import {createSlice} from '@reduxjs/toolkit'
-let initialState:ResData={
-    sucess:false,
-    message:""
+let initialState:authMessage={
+    Register:{
+        sucess:false,
+        message:""
+    },
+    Login:{
+        sucess:false,
+        message:""
+    }
+   
 }
 
 const authSlice=createSlice({
@@ -10,10 +17,12 @@ const authSlice=createSlice({
     initialState,
     reducers:{
         registerUser:(state,action)=>{
-            state.sucess=action.payload.sucess
-            state.message=action.payload.message
+            state.Register.sucess=action.payload.sucess
+            state.Register.message=action.payload.message
         },
         loginUser:(state,action)=>{
+            state.Login.sucess=action.payload.sucess
+            state.Login.message=action.payload.message
             
         }
     }

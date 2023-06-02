@@ -25,16 +25,21 @@ export default function Home() {
     formdata.append('profile',profile)
     console.log(formdata)
     const res=await axios.post(`${BASE_URL}/api/v1/user/register`,formdata);
+    console.log(res.data,"res")
     dispatch(registerUser(res.data))
     
   }
   
   
-  const data=useSelector((data:any)=>{
+  const {Register,Login}=useSelector((data:any)=>{
     return data.authReducer
   })
+  console.log(Register)
+  console.log(Login)
+
   useEffect(()=>{
-    if(data.sucess){
+    console.log(Register.sucess,"the best")
+    if(Register.sucess){
       router.push('/login')      
     }
   })

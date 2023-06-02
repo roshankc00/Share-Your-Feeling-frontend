@@ -3,16 +3,12 @@ export interface RegisterInterface {
     email:string,
     password:string
 }
-export interface authMessage{
-    Register:Array<RegisterInterface>,
-    Login:Array<RegisterInterface>
-}
 
 export interface ResData{
     sucess:boolean,
     message:string
 }
-export interface loginInterface {
-    email:string,
-    password:string
+export interface authMessage{
+    Register:ResData,
+    Login:ResData,
 }

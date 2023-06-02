@@ -1,10 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "@/constants/api_all";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "@/slice/authSlice";
+import { useRouter } from "next/router";
 
 const login = () => {
+  const {Login}=useSelector((data:any)=>{
+    return data.authReducer
+  })
+  const Router=useRouter()
   const dispatch=useDispatch()
   const [inputs, setinputs] = useState({
     email: "",
@@ -19,8 +24,12 @@ const login = () => {
 
     console.log(res.data)
     dispatch(loginUser(res.data))
-    // console.log(inputs)
   };
+  useEffect(()=>{
+    if(Login.sucess){
+      Router.push('/content')
+    }
+  })
   return (
     <div>
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
