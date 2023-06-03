@@ -2,6 +2,7 @@ import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import AddHomeIcon from '@mui/icons-material/AddHome';
 import ShareIcon from '@mui/icons-material/Share';
+import Link from 'next/link';
 export default function header() {
   const Router=useRouter()
   return (
@@ -22,8 +23,12 @@ export default function header() {
           <ShareIcon/>
           sharePost</button>
     </li>
+    <li>
+      <Link href="/profile" className='text-red-900'> view Profile</Link>
+    </li>
  
 </ul>
+
 
     </div>
   )

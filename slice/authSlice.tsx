@@ -9,7 +9,8 @@ let initialState:authMessage={
         sucess:false,
         message:"",
         token:""
-    }
+    },
+    Profile:[]
    
 }
 
@@ -25,9 +26,12 @@ const authSlice=createSlice({
             state.Login.sucess=action.payload.sucess
             state.Login.message=action.payload.message
             state.Login.token=action.payload.token
+        },
+        getUserProfile:(state,action)=>{
+            state.Profile=action.payload           
         }
-    }
-
+    },
+    
 })
-export const {registerUser,loginUser}=authSlice.actions
+export const {registerUser,loginUser,getUserProfile}=authSlice.actions
 export default authSlice.reducer
