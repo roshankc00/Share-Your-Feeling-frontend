@@ -12,7 +12,12 @@ export default function content() {
   let data=useSelector((data:any)=>{return data.postReducer.allPosts})
   console.log(data)
     const fetchDate=async()=>{
-        let res=await fetch(`${BASE_URL}/posts`)
+        let res=await fetch(`${BASE_URL}/posts`,{
+          method:"GET",
+          headers:{
+            token:localStorage.getItem('token')
+          }
+        })
         res=await res.json()
         console.log(res)
         dispach(getAllPosts(res))
@@ -24,8 +29,7 @@ export default function content() {
     <div>
        <Header/>
        <div className="flex justify-center  flex-col items-center">
-
-      {
+      {data&&
         data.map((el:any)=>{
           console.log(el.likes.length)          
           console.log(el.thumbnail.imgurl)

@@ -34,6 +34,7 @@ const login = () => {
       method:"POST",
       headers:{
       "Content-Type": "application/json",
+      
       },
       body:loginData
     });
@@ -47,7 +48,7 @@ const login = () => {
 };
   useEffect(()=>{
     if(Login.sucess){
-cookies.set("token",Login.token)   
+      localStorage.setItem('token',Login.token)
       Router.push('/content')
     }
   })
