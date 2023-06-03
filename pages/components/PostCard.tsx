@@ -9,19 +9,45 @@ function PostCard(props:any) {
     likeHandle:false,
     dislikeHandle:false,
   })
+const handleLike=async()=>{
+  const res=await fetch(`http://localhost:5000/api/v1/post/like/${props.post._id}`,{
+    method:"GET",
+    headers:{
+      token:localStorage.getItem('token')
+    }
+  })
+  let json=await res.json()
+  console.log(json)
+  setinputs({...inputs,likeHandle:!inputs.likeHandle})
 
+  console.log(!inputs.likeHandle)
+
+}
+const handleDisike=async()=>{
+  const res=await fetch(`http://localhost:5000/api/v1/post/dislike/${props.post._id}`,{
+    method:"GET",
+    headers:{
+      token:localStorage.getItem('token')
+    }
+  })
+  let json=await res.json()
+  console.log(json)
+
+  console.log(!inputs.likeHandle)
+
+}
   return (
     <>
-<div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+<div className="shadow">
 
   <div className="profile flex gap-1  p-3">
-    <img src={props.post.user.profile.url}className='h-20 w-20 rounded-full' alt="profile" />
+    <img src={props.post.user.profile.url}className='h-20 w-20 rounded-full' alt="profile"/>
     <h1 className='text-2xl font-bold mt-5'>{props.post.user.name}</h1>
   </div>
 
     <div >
     <h5 className="m-2 ps-3 text-xl font-bold tracking-tight text-gray-900 dark:text-white">{props.post.caption}</h5>
-        <img className=" p-3 w-50 h-50" src={props.post.thumbnail.imgurl}alt="" />
+        <img className=" p-3 w-50 h-50 thumbnail-image" src={props.post.thumbnail.imgurl}alt="" />
     </div>
     <div className="p-5">
         <div className='like'>
@@ -29,7 +55,7 @@ function PostCard(props:any) {
             <div className="flex gap-2 " >
             <p> {props.post.likes.length} likes</p>
             <button onClick={()=>{
-              setinputs({...inputs,likeHandle:!inputs.likeHandle})
+              handleLike()
             }}>
               {
                inputs.likeHandle?
@@ -42,7 +68,9 @@ function PostCard(props:any) {
            
             <div className="flex gap-2">
             <p> {props.post.dislikes.length} dislikes</p>
-            <button onClick={()=>{
+            <button onClick={(e)=>{
+              e.preventDefault()
+              handleDisike()
               setinputs({...inputs,dislikeHandle:!inputs.dislikeHandle})
             }}>
               {

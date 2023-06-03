@@ -8,6 +8,17 @@ import PostCard from './components/PostCard';
 
 
 export default function content() {
+  const handleLike=async()=>{
+    const res=await fetch(`http://localhost:5000/api/v1/post/like/${props.post._id}`,{
+      method:"GET",
+      headers:{
+        token:localStorage.getItem('token')
+      }
+    })
+    let json=await res.json()
+    console.log(json)
+  
+  }
   const dispach=useDispatch()
   let data=useSelector((data:any)=>{return data.postReducer.allPosts})
   console.log(data)
@@ -26,17 +37,21 @@ export default function content() {
         fetchDate()
     },[])
   return (
-    <div>
+    <div> 
        <Header/>
+    <div className='feed'> 
        <div className="flex justify-center  flex-col items-center">
       {data&&
         data.map((el:any)=>{
           console.log(el.likes.length)          
           console.log(el.thumbnail.imgurl)
-          return <PostCard post={el}/>
+          return <>
+          <PostCard post={el}/>
+          </>
         })
         
       }
+      </div>
       </div>
 
             
