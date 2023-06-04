@@ -6,6 +6,7 @@ export default function post() {
     
   
     useEffect(()=>{
+      
         })
   return (
     <div>post</div>

@@ -8,6 +8,9 @@ export default function createpost() {
         caption:"",
         thumbnail:""
     })
+
+ 
+
     const handleCreate=async(e:any)=>{
         e.preventDefault()
         console.log(inputs)
@@ -28,10 +31,9 @@ export default function createpost() {
     }
    
   return (
-    <div className='flex justify-center  flex-col items-center '>
+    <div className=' my-10 flex justify-center  flex-col items-center '>
         <Header/>
-
-        <div  className=" flex flex-col justify-center w-100 content-center max-w-sm p-6 bg-white border border-gray-200 rounded-lg mt-10 ">
+        <div  className="my-10 flex flex-col justify-center w-100 content-center max-w-sm p-6 bg-white border border-gray-200 rounded-lg mt-10 ">
         <img src="" alt="" />
         <input type="text" className='p-10 text-xxl block w-full rounded-md border-0 py-5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 
         placeholder:text-gray-400 focus:ring-2 focus:ring-inset  focus:ring-indigo-600 sm:text-sm sm:leading-6' name="caption" id="" placeholder='Enter the Caption' value={inputs.caption} onChange={(e)=>{

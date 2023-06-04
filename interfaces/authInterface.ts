@@ -3,7 +3,6 @@ export interface RegisterInterface {
     email:string,
     password:string
 }
-
 export interface ResData{
     sucess:boolean,
     message:string

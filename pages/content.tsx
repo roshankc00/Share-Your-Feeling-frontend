@@ -10,21 +10,7 @@ import { getUserProfile } from '@/slice/authSlice';
 
 export default function content() {
   const dispach=useDispatch()
-  const getProfile=async()=>{
-    const res=await fetch(`${BASE_URL}/user/myprofile`,{
-        method:"GET",
-        headers:{
-            token:localStorage.getItem('token')
-        }
-        
-    })
-    let json=await res.json()
-    console.log(json)
-    dispach(getUserProfile(json.profile))
-    
-    
-    
-}
+
 
   const handleLike=async()=>{
     const res=await fetch(`http://localhost:5000/api/v1/post/like/${props.post._id}`,{
@@ -52,7 +38,6 @@ export default function content() {
     }
     useEffect(()=>{
         fetchDate()
-        getProfile()
     },[])
   return (
     <div> 
