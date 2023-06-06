@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import cookies from 'js-cookie'
-import axios from "axios";
 import { BASE_URL } from "@/constants/api_all";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "@/slice/authSlice";
 import { useRouter } from "next/router";
+import { loginMe } from "@/interfaces/authInterface";
 
 const login = () => {
   const {Login}=useSelector((data:any)=>{
@@ -12,7 +11,7 @@ const login = () => {
   })
   const Router=useRouter()
   const dispatch=useDispatch()
-  const [inputs, setinputs] = useState({
+  const [inputs, setinputs] = useState<loginMe>({
     email: "",
     password: "",
   });

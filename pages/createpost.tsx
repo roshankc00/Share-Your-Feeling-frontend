@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import Header from './components/Header';
 import axios from 'axios';
 import { BASE_URL } from '@/constants/api_all';
+import { createPost } from '@/interfaces/postInterface';
 
 export default function createpost() {
-    const [inputs, setinputs] = useState({
+    const [inputs, setinputs] = useState<createPost>({
         caption:"",
         thumbnail:""
     })
@@ -21,12 +22,13 @@ export default function createpost() {
             method:"POST",
             body:formdata ,
             headers:{
-              token:localStorage.getItem('token')
+              Authorization: `Bearer ${localStorage.getItem('token')}` 
             }
         })
         res=await res.json()
         console.log(res)
         // console.log(formdata)
+        
         
     }
    

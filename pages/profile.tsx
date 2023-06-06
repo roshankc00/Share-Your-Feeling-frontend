@@ -4,10 +4,11 @@ import React from 'react'
 import { useEffect } from 'react';
 import {  useDispatch, useSelector } from 'react-redux';
 import PostCard from './components/PostCard';
-
+import Header from './components/Header';
 export default function profile() {
     const dispatch=useDispatch()
     const data=useSelector((data:any)=>{
+        console.log(data.authReducer.Profile[0])
         return data.authReducer.Profile[0];
     })
 
@@ -15,7 +16,7 @@ export default function profile() {
         const res=await fetch(`${BASE_URL}/user/myprofile`,{
             method:"GET",
             headers:{
-                token:localStorage.getItem('token')
+                Authorization: `Bearer ${localStorage.getItem('token')}` 
             }
             
         })
@@ -29,12 +30,10 @@ export default function profile() {
         getProfile()
 
     },[])
-    if(data){
-
-        console.log(data.posts)
-    }
+  
   return (
     <div className='shadow'>
+        <Header/>
     {data&&
         <div className='flex justify-center  flex-col items-center mt-10  '> 
         <img src={data.profile.url} className='rounded-full h-40 w-40' alt=""/>
@@ -43,7 +42,7 @@ export default function profile() {
         <button className=''>Follow me</button>
         </div>
         <h1 className='font-bold text-xl my-10'> all the posts</h1>
-        {/* <div>
+        <div>
             {
                 data.posts.map((el:any)=>{
                     console.log(el)
@@ -51,7 +50,7 @@ export default function profile() {
                 return   <PostCard key={el._id} post={el}/>
                 })
             }
-        </div> */}
+        </div>
 
 
 

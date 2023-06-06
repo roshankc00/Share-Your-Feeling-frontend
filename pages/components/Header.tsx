@@ -7,7 +7,6 @@ import Link from 'next/link';
 import { useSelector } from 'react-redux';
 export default function header() {
   const Router=useRouter()
-  let data=useSelector((data:any)=>{console.log(data.authReducer)})
   return (
     <div>
 <ul className="flex  gap-10 text-sm font-medium text-center text-gray-500 dark:text-gray-400 items-center justify-center my-5 nav-header mr-10">

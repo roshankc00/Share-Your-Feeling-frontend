@@ -10,7 +10,8 @@ let initialState:authMessage={
         message:"",
         token:""
     },
-    Profile:[]
+    Profile:[],
+    followUser:[]
    
 }
 
@@ -29,9 +30,12 @@ const authSlice=createSlice({
         },
         getUserProfile:(state,action)=>{
             state.Profile=action.payload           
+        },
+        getFollowProfile:(state,action)=>{
+            state.followUser=action.payload           
         }
     },
     
 })
-export const {registerUser,loginUser,getUserProfile}=authSlice.actions
+export const {registerUser,loginUser,getUserProfile,getFollowProfile}=authSlice.actions
 export default authSlice.reducer

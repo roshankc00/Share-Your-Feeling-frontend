@@ -18,3 +18,8 @@ export interface authMessage{
     Login:LoginData,
     Profile:any
 }
+
+export interface loginMe {
+    email:string,
+    password:string
+}
