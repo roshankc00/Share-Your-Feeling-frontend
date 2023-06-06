@@ -16,7 +16,8 @@ export interface LoginData{
 export interface authMessage{
     Register:ResData,
     Login:LoginData,
-    Profile:any
+    Profile:any,
+    followUser:any,
 }
 
 export interface loginMe {

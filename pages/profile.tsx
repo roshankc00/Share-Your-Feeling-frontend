@@ -8,7 +8,6 @@ import Header from './components/Header';
 export default function profile() {
     const dispatch=useDispatch()
     const data=useSelector((data:any)=>{
-        console.log(data.authReducer.Profile[0])
         return data.authReducer.Profile[0];
     })
 
@@ -21,6 +20,7 @@ export default function profile() {
             
         })
         let json=await res.json()
+        // console.log(json,"wpw")
         dispatch(getUserProfile(json.profile))
         
 
@@ -45,8 +45,6 @@ export default function profile() {
         <div>
             {
                 data.posts.map((el:any)=>{
-                    console.log(el)
-
                 return   <PostCard key={el._id} post={el}/>
                 })
             }

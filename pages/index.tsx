@@ -2,6 +2,8 @@ import { BASE_URL } from "@/constants/api_all";
 import { RegisterInterface } from "@/interfaces/authInterface";
 import { registerUser } from "@/slice/authSlice";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,11 +26,18 @@ export default function Home() {
     formdata.append('password',inputs.password)
     formdata.append('profile',profile)
     console.log(formdata)
-    const res=await axios.post(`${BASE_URL}/user/register`,formdata);
-    console.log(res.data,"res")
-    dispatch(registerUser(res.data))
+    toast.loading("loading")
+     axios.post(`${BASE_URL}/user/register`,formdata).then((res)=>{
+       toast.success("user registered")
+       dispatch(registerUser(res.data))
+      }).catch((err)=>{
+       toast.warn("failed to login")
+     })
+  
+
     
   }
+
   
   
   const {Register,Login}=useSelector((data:any)=>{
@@ -36,10 +45,11 @@ export default function Home() {
   })
   console.log(Register)
   console.log(Login)
-
+  
   useEffect(()=>{
     console.log(Register.sucess,"the best")
     if(Register.sucess){
+
       router.push('/login')      
     }
   })
@@ -47,6 +57,7 @@ export default function Home() {
   return (
     <>
       <div>
+    <ToastContainer />
         <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <h1 className="mt-10 text-center text-4xl font-bold leading-9 tracking-tight text-gray-900">

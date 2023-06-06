@@ -3,6 +3,8 @@ import Header from './components/Header';
 import axios from 'axios';
 import { BASE_URL } from '@/constants/api_all';
 import { createPost } from '@/interfaces/postInterface';
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
 export default function createpost() {
     const [inputs, setinputs] = useState<createPost>({
@@ -14,26 +16,34 @@ export default function createpost() {
 
     const handleCreate=async(e:any)=>{
         e.preventDefault()
-        console.log(inputs)
         const formdata=new FormData();
         formdata.append('caption',inputs.caption)
         formdata.append('thumbnail',inputs.thumbnail)
-        let res=await fetch(`${BASE_URL}/post/create`,{
+        if(!inputs.caption || !inputs.thumbnail){
+          toast.warn("all the fields are necessary")
+        }
+        toast("loading")
+        let res= fetch(`${BASE_URL}/post/create`,{
             method:"POST",
             body:formdata ,
             headers:{
               Authorization: `Bearer ${localStorage.getItem('token')}` 
             }
+        }).then((res)=>{
+          console.log(res)
+          toast.success("post added sucessfully")
+          
+        }).catch((err)=>{
+          console.log(err)
+
         })
-        res=await res.json()
-        console.log(res)
-        // console.log(formdata)
         
         
     }
    
   return (
     <div className=' my-10 flex justify-center  flex-col items-center '>
+      <ToastContainer />
         <Header/>
         <div  className="my-10 flex flex-col justify-center w-100 content-center max-w-sm p-6 bg-white border border-gray-200 rounded-lg mt-10 ">
         <img src="" alt="" />

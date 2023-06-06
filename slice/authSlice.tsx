@@ -32,7 +32,7 @@ const authSlice=createSlice({
             state.Profile=action.payload           
         },
         getFollowProfile:(state,action)=>{
-            state.followUser=action.payload           
+            state.followUser=action.payload   
         }
     },
     

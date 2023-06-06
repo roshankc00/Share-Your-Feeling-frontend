@@ -16,12 +16,11 @@ function PostCard(props:any) {
     likeHandle:false,
     dislikeHandle:false,
   })
-  // handle like
 const handleLike=async()=>{
   const res=await fetch(`http://localhost:5000/api/v1/post/like/${props.post._id}`,{
     method:"GET",
     headers:{
-      token:localStorage.getItem('token')
+      Authorization: `Bearer ${localStorage.getItem('token')}` 
     }
   })
   let json=await res.json()
@@ -33,17 +32,17 @@ const handleLike=async()=>{
 }
 //handledislike
 const handleDisike=async()=>{
+
   const res=await fetch(`http://localhost:5000/api/v1/post/dislike/${props.post._id}`,{
     method:"GET",
     headers:{
-      "Content-Type": "application/json",
-      token:localStorage.getItem('token')
+      Authorization: `Bearer ${localStorage.getItem('token')}` 
       
-      },
+    },
   })
   let json=await res.json()
   console.log(json)
-
+  
   console.log(!inputs.likeHandle)
 
 }
@@ -59,17 +58,19 @@ const handleComment=async()=>{
     comment:inputs.comment,
     postId:props.post._id
   }
-  // const res=await fetch(`${BASE_URL}/comment/create`,{
-  //   method:"POST",
-  //   headers:{
-  //     token:localStorage.getItem('token')
-  //   },
-  //   body:JSON.stringify(data),
-  // })
-  // console.log(await res.json())
   console.log(data)
+  const res=await fetch(`${BASE_URL}/comment/create`,{
+    method:"POST",
+    headers:{
+      Authorization: `Bearer ${localStorage.getItem('token')}` 
+    },
+    body:JSON.stringify(data)
+  })
+  console.log(await res.json())
+
   setinputs({...inputs,comment:""})
 }
+// handler for the feed user profile 
 const handlerProfile=(id:string)=>{
   localStorage.setItem('getMyProfile',id)
   Router.push('/followProfile')
@@ -144,8 +145,7 @@ const handlerProfile=(id:string)=>{
               <h1 className='text-center text-bold text-xl my-5'>All the comments</h1>
               {
                 props.post.comments.map((el:any)=>{
-                  console.log(el.user)
-                  return <div>
+                  return <div key={el._id}>
                     <div className='flex gap-7 mt-2'>
                       <img src={el.user.profile.url} alt="" className='h-10 w-10 rounded-full' />
                       <div className="">

@@ -5,6 +5,9 @@ import { loginUser } from "@/slice/authSlice";
 import { useRouter } from "next/router";
 import { loginMe } from "@/interfaces/authInterface";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const login = () => {
   const {Login}=useSelector((data:any)=>{
     return data.authReducer
@@ -20,29 +23,38 @@ const login = () => {
     let loginData:any={
       email:inputs.email,
       password:inputs.password
-
+      
+    }
+    if(!inputs.email || !inputs.password){
+      toast.warn("all the fields are required")
     }
     loginData=JSON.stringify(loginData)
     try {
       
-   
-    // const res = await axios.post(`${BASE_URL}/user/login`,
-    //  loginData)
-    //   ;
-    const response=await fetch(`${BASE_URL}/user/login`,{
-      method:"POST",
-      headers:{
-      "Content-Type": "application/json",
       
-      },
-      body:loginData
-    });
-    const json=await response.json()
-    console.log(json.token);
-    dispatch(loginUser(json))
-  } catch (error) {
-    console.log(error)
-    
+      // const res = await axios.post(`${BASE_URL}/user/login`,
+      //  loginData)
+      //   ;
+      toast("loading>>")
+      const response=await fetch(`${BASE_URL}/user/login`,{
+        method:"POST",
+        headers:{
+          "Content-Type": "application/json",
+          
+        },
+        body:loginData
+      });
+      const json=await response.json()
+      console.log(!json.sucess);
+      if(json.sucess){
+        toast.success("user login sucessfully")
+      }
+      dispatch(loginUser(json))
+      
+    } catch (error) {
+      toast.warn("login failed")
+      console.log(error)
+      
   }
 };
   useEffect(()=>{
@@ -53,6 +65,7 @@ const login = () => {
   })
   return (
     <div>
+         <ToastContainer />
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
