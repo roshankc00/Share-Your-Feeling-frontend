@@ -5,7 +5,7 @@ import {  useDispatch, useSelector } from 'react-redux';
 import PostCard from './components/PostCard';
 import Header from './components/Header';
 import { getFollowProfile } from '@/slice/authSlice';
-export default function profile() {
+export default function Profile() {
     const dispatch=useDispatch()
     const data=useSelector((data:any)=>{
         console.log(data.authReducer.followUser.profile?.url);

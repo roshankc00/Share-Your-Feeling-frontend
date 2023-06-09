@@ -8,9 +8,21 @@ import Link from 'next/link';
 import { json } from 'stream/consumers';
 import { BASE_URL } from '@/constants/api_all';
 import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
+import { disLikePost, likePost } from '@/slice/postSlice';
+import { likedislike } from '@/interfaces/postInterface';
 function PostCard(props:any) {
+  const dispatch=useDispatch()
   const Router=useRouter()
-  
+
+
+  // likes handler 
+  const totalLikes:any=useSelector((state:any)=>{
+    return  state.postReducer.likes
+  })
+  const totaldisLikes:any=useSelector((state:any)=>{
+    return  state.postReducer.dislikes
+  })
   const [inputs, setinputs] = useState({
     comment:"",
     likeHandle:false,
@@ -24,12 +36,13 @@ const handleLike=async()=>{
     }
   })
   let json=await res.json()
-  console.log(json)
+  console.log(json.posts,"wow")
   setinputs({...inputs,likeHandle:!inputs.likeHandle})
+  dispatch(likePost(json.post))
 
-  console.log(!inputs.likeHandle)
 
 }
+
 //handledislike
 const handleDisike=async()=>{
 
@@ -41,10 +54,8 @@ const handleDisike=async()=>{
     },
   })
   let json=await res.json()
-  console.log(json)
+  dispatch(disLikePost(json.post))  
   
-  console.log(!inputs.likeHandle)
-
 }
 
 
@@ -58,25 +69,31 @@ const handleComment=async()=>{
     comment:inputs.comment,
     postId:props.post._id
   }
-  console.log(data)
-  const res=await fetch(`${BASE_URL}/comment/create`,{
+  // console.log(data)
+  const res=await fetch(`http://localhost:5000/api/v1/comment/create`,{
     method:"POST",
     headers:{
       Authorization: `Bearer ${localStorage.getItem('token')}` 
     },
     body:JSON.stringify(data)
   })
-  console.log(await res.json())
-
+  console.log(await res.json(),"wpw")
+  
   setinputs({...inputs,comment:""})
 }
+
+
 // handler for the feed user profile 
 const handlerProfile=(id:string)=>{
   localStorage.setItem('getMyProfile',id)
   Router.push('/followProfile')
 }
+
+
+// jsx
   return (
     <>
+    
 <div className="shadow mt-8">
 
   <div className="profile flex gap-3 p-3">
@@ -92,7 +109,10 @@ const handlerProfile=(id:string)=>{
         <div className='like'>
       <div className="all-likes-comment flex gap-8 mb-4">
             <div className="flex gap-2 " >
-            <p> {props.post.likes.length} </p>
+              
+
+                <p> {totalLikes===0?props.post.likes.length:totalLikes}  </p>
+              
             <button onClick={()=>{
               handleLike()
             }}>
@@ -106,7 +126,7 @@ const handlerProfile=(id:string)=>{
             {/* end likes */}
            
             <div className="flex gap-2">
-            <p> {props.post.dislikes.length} </p>
+            <p> {totaldisLikes===0?props.post.dislikes.length:totaldisLikes} </p>
             <button onClick={(e)=>{
               e.preventDefault()
               handleDisike()

@@ -8,7 +8,7 @@ import { loginMe } from "@/interfaces/authInterface";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const login = () => {
+const Login = () => {
   const {Login}=useSelector((data:any)=>{
     return data.authReducer
   })
@@ -45,7 +45,7 @@ const login = () => {
         body:loginData
       });
       const json=await response.json()
-      console.log(!json.sucess);
+      console.log(json.sucess);
       if(json.sucess){
         toast.success("user login sucessfully")
       }
@@ -145,6 +145,6 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;
 
 // mongodb+srv://rohitkc8848:aBFc4mt1AiItQftU@cluster0.lkxbuza.mongodb.net/todos?retryWrites=true&w=majority

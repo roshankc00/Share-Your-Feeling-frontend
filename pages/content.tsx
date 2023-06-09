@@ -9,11 +9,13 @@ import PostCard from './components/PostCard';
 interface handler {
   render:string
 }
-export default function content() {
+export default function Content() {
   const dispach=useDispatch()
  
      
-  let data=useSelector((data:any)=>{return data.postReducer.allPosts})
+  let data=useSelector((data:any)=>{
+    console.log(data,"content")
+    return data.postReducer.allPosts})
     const fetchDate=async()=>{
         let res=await fetch(`${BASE_URL}/posts`,{
           method:"GET",
